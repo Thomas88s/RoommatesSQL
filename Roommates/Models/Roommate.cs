@@ -2,7 +2,6 @@ using System;
 
 namespace Roommates.Models
 {
-    // C# representation of the Roommate table
     public class Roommate
     {
         public int Id { get; set; }
@@ -13,3 +12,5 @@ namespace Roommates.Models
         public Room Room { get; set; }
     }
 }
+
+
