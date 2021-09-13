@@ -139,7 +139,50 @@ namespace Roommates.Repositories
             }
 
             // when this method is finished we can look in the database and see the new room.
+
         }
+            /// <summary>
+            ///  Updates the room
+            /// </summary>
+            /// 
+        public void Update(Room room)
+        {
+            using(SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Room
+                                        SET Name = @name,
+                                            MaxOccupancy = @maxOccupancy
+                                        WHERE Id = @id;";
+                    cmd.Parameters.AddWithValue("@Name", room.Name);
+                    cmd.Parameters.AddWithValue("@MaxOccupancy", room.MaxOccupancy);
+                    cmd.Parameters.AddWithValue("@id", room.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        /// <summary>
+        ///  Delete the room with the given id
+        /// </summary>
+
+        public void Delete(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Room WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
 
     }
 }
