@@ -71,7 +71,7 @@ namespace Roommates.Repositories
         ///  Returns a single room with the given id.
         /// </summary>
 
-        public Chore GetById(int choreId)
+        public Chore GetById(int id)
         {
             using (SqlConnection conn = Connection)
             {
@@ -79,7 +79,7 @@ namespace Roommates.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = "SELECT Name FROM Chore WHERE Id = @id";
-                    cmd.Parameters.AddWithValue("@id", choreId);
+                    cmd.Parameters.AddWithValue("@id", id);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     Chore chore = null;
@@ -88,7 +88,7 @@ namespace Roommates.Repositories
                     {
                         chore = new Chore
                         {
-                            Id = choreId,
+                            Id = id,
                             Name = reader.GetString(reader.GetOrdinal("Name"))
                         };
                     }
@@ -114,7 +114,7 @@ namespace Roommates.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO Room (Name)
+                    cmd.CommandText = @"INSERT INTO Chore (Name)
                                         OUTPUT INSERTED.Id
                                         VALUES (@name)";
                     cmd.Parameters.AddWithValue("@name", chore.Name);
