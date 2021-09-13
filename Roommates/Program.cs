@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Roommates.Models;
+using System.Linq;
 
 namespace Roommates.Repositories
 { 
@@ -31,6 +32,7 @@ namespace Roommates.Repositories
                         Console.Write("Press any key to continue");
                         Console.ReadKey();
                         break;
+
                     case ("Search for room"):
                         Console.Write("Room Id: ");
                         int id = int.Parse(Console.ReadLine());
@@ -41,6 +43,7 @@ namespace Roommates.Repositories
                         Console.Write("Press any key to continue");
                         Console.ReadKey();
                         break;
+
                     case ("Add a room"):
                         Console.Write("Room name: ");
                         string name = Console.ReadLine();
@@ -60,13 +63,56 @@ namespace Roommates.Repositories
                         Console.Write("Press any key to continue");
                         Console.ReadKey();
                         break;
+
+                    case ("Update a room"):
+                        List<Room> roomOptions = roomRepo.GetAll();
+                        foreach (Room r in roomOptions)
+                        {
+                            Console.WriteLine($"{r.Id} - {r.Name} Max Occupancy({r.MaxOccupancy})");
+                        }
+
+                        Console.Write("Which room would you like to update? ");
+                        int selectedRoomId = int.Parse(Console.ReadLine());
+                        Room selectedRoom = roomOptions.FirstOrDefault(r => r.Id == selectedRoomId);
+
+                        Console.Write("New Name: ");
+                        selectedRoom.Name = Console.ReadLine();
+
+                        Console.Write("New Max Occupancy: ");
+                        selectedRoom.MaxOccupancy = int.Parse(Console.ReadLine());
+
+                        roomRepo.Update(selectedRoom);
+
+                        Console.WriteLine("Room has been succesfully updated");
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
+                        break;
+
+                    case ("Delete a room"):
+                        List<Room> roomToDelete = roomRepo.GetAll();
+                        foreach (Room r in roomToDelete)
+                        {
+                            Console.WriteLine($"{r.Id} - {r.Name} Max Occupancy({r.MaxOccupancy})");
+                        }
+
+                        Console.Write("Which room would you like to delete? ");
+                        int selectedRoomToDeleteId = int.Parse(Console.ReadLine());
+                        Room selectedRoomToDlete = roomToDelete.FirstOrDefault(r => r.Id == selectedRoomToDeleteId);
+
+                        roomRepo.Delete(selectedRoomToDeleteId);
+
+                        Console.WriteLine("Room has been succesfully deleted");
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
+                        break;
+
                     case ("Exit"):
                         runProgram = false;
                         break;
+
+            
                 }
             }
-
-
 
         }
 
@@ -79,6 +125,8 @@ namespace Roommates.Repositories
                 "Show all rooms",
                 "Search for room",
                 "Add a room",
+                "Update a room",
+                "Delete a room",
                 "Exit"
             };
 
