@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Roommates.Models;
 
 namespace Roommates.Repositories
-{
+{ 
     class Program
     {
         //  This is the address of the database.
@@ -14,6 +14,7 @@ namespace Roommates.Repositories
         static void Main(string[] args)
         {
             RoomRepository roomRepo = new RoomRepository(CONNECTION_STRING);
+
             bool runProgram = true;
             while (runProgram)
             {
@@ -40,12 +41,11 @@ namespace Roommates.Repositories
                         Console.Write("Press any key to continue");
                         Console.ReadKey();
                         break;
-
                     case ("Add a room"):
                         Console.Write("Room name: ");
                         string name = Console.ReadLine();
 
-                        Console.Write("Max occupancy: ");
+                        Console.Write("Max Occupancy: ");
                         int max = int.Parse(Console.ReadLine());
 
                         Room roomToAdd = new Room()
@@ -56,11 +56,10 @@ namespace Roommates.Repositories
 
                         roomRepo.Insert(roomToAdd);
 
-                        Console.WriteLine($"{roomToAdd.Name} has been added and assigned an Id of {roomToAdd.Id}");
+                        Console.WriteLine($"{roomToAdd} has been added and assigned an Id of {roomToAdd.Id}");
                         Console.Write("Press any key to continue");
                         Console.ReadKey();
                         break;
-
                     case ("Exit"):
                         runProgram = false;
                         break;
