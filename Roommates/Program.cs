@@ -15,7 +15,9 @@ namespace Roommates.Repositories
         static void Main(string[] args)
         {
             RoomRepository roomRepo = new RoomRepository(CONNECTION_STRING);
+            RoommateRepository roommateRepo = new RoommateRepository(CONNECTION_STRING);
             ChoreRepository choreRepo = new ChoreRepository(CONNECTION_STRING);
+
 
             bool runProgram = true;
             while (runProgram)
@@ -107,6 +109,17 @@ namespace Roommates.Repositories
                         Console.ReadKey();
                         break;
 
+                    case ("Search for roommate"):
+                        Console.Write("Roommate Id: ");
+                        int roommateId = int.Parse(Console.ReadLine());
+
+                        Roommate roommate = roommateRepo.GetById(roommateId);
+
+                        Console.WriteLine($"{roommate.Id} - {roommate.FirstName} RentPortion({roommate.RentPortion} Room({roommate.RoomId}))");
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
+                        break;
+
                     case ("Show all chores"):
                         List<Chore> chores = choreRepo.GetAll();
                         foreach (Chore c in chores)
@@ -118,7 +131,7 @@ namespace Roommates.Repositories
                         Console.ReadKey();
                         break;
 
-                    case ("Search for Chore"):
+                    case ("Search for chore"):
                         Console.Write("Chore Id: ");
                         int choreId = int.Parse(Console.ReadLine());
 
@@ -166,6 +179,7 @@ namespace Roommates.Repositories
                 "Add a room",
                 "Update a room",
                 "Delete a room",
+                "Search for roommate",
                 "Show all chores",
                 "Search for chore",
                 "Add a chore",
